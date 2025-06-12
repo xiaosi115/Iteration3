@@ -1,0 +1,20 @@
+{
+  "name": "cars-website",
+  "version": "1.0.0",
+  "description": "Official website for C.A.R.S",
+  "main": "index.html",
+  "scripts": {
+    "build:css": "tailwindcss -i ./css/input.css -o ./dist/style.css",
+    "build:css:watch": "tailwindcss -i ./css/input.css -o ./dist/style.css --watch"
+  },
+  "keywords": [
+    "AR",
+    "cars",
+    "navigation"
+  ],
+  "author": "Your Name/Company",
+  "license": "ISC",
+  "devDependencies": {
+    "tailwindcss": "^3.4.3"
+  }
+}

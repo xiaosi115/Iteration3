@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom base styles */
+body {
+  @apply font-sans antialiased text-gray-100 bg-gray-900;
+}
+
+/* Animation helper classes (used by JS and index.html's <style> block) */
+.animation-delay-300 { animation-delay: 0.3s; }
+.animation-delay-500 { animation-delay: 0.5s; }
+.animation-delay-700 { animation-delay: 0.7s; }
+
+/* 
+  The actual animation application (.start-animation) and initial hidden state 
+  are handled in the <style> block in index.html to ensure they apply correctly 
+  with Intersection Observer. Keyframes are defined in tailwind.config.js.
+*/

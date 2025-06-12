@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>团队介绍 - C.A.R.S</title>
+    <script src="https://cdn.tailwindcss.com/"></script>
+    <script defer src="./script/script.js"></script>
+    <style>
+        /* Basic styles for consistency with index.html dark theme */
+        body {
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+        }
+         /* Animations for elements appearing on scroll - ensure keyframes are defined or remove if not used */
+        .animate-fade-in-down:not(.start-animation),
+        .animate-slide-in-left:not(.start-animation) {
+            opacity: 0;
+        }
+        .animate-fade-in-down.start-animation {
+            animation: fade-in-down 0.6s ease-out forwards;
+        }
+        .animate-slide-in-left.start-animation {
+            animation: slide-in-left 0.6s ease-out forwards;
+        }
+        @keyframes fade-in-down {
+            '0%': { opacity: '0', transform: 'translateY(-20px)' },
+            '100%': { opacity: '1', transform: 'translateY(0)' },
+        }
+        @keyframes slide-in-left {
+            '0%': { opacity: '0', transform: 'translateX(-20px)' },
+            '100%': { opacity: '1', transform: 'translateX(0)' },
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-100 font-sans antialiased">
+
+    <!-- Navigation Bar (Copied from index.html for consistency) -->
+    <nav class="bg-gray-800 shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold text-white hover:text-blue-400 transition-colors duration-300">
+                C.A.R.S
+            </a>
+            <div class="hidden md:flex space-x-4">
+                <a href="index.html" class="px-3 py-2 text-gray-200 hover:bg-gray-700 rounded-md transition-colors duration-300">主页</a>
+                <a href="team.html" class="px-3 py-2 text-gray-200 bg-gray-700 rounded-md transition-colors duration-300">团队介绍</a>
+                <a href="index.html#download" class="px-3 py-2 text-gray-200 hover:bg-gray-700 rounded-md transition-colors duration-300">下载页面</a>
+                <a href="login.html" class="px-3 py-2 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-md transition-colors duration-300">登录</a>
+                <a href="register.html" class="px-3 py-2 text-gray-200 hover:bg-gray-700 rounded-md transition-colors duration-300">注册</a>
+            </div>
+            <div class="md:hidden">
+                <button id="menu-toggle" class="text-gray-200 focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
+        </div>
+        <div id="mobile-menu" class="md:hidden hidden bg-gray-800">
+            <a href="index.html" class="block px-4 py-2 text-gray-200 hover:bg-gray-700 transition-colors duration-300">主页</a>
+            <a href="team.html" class="block px-4 py-2 text-gray-200 bg-gray-700 transition-colors duration-300">团队介绍</a>
+            <a href="index.html#download" class="block px-4 py-2 text-gray-200 hover:bg-gray-700 transition-colors duration-300">下载页面</a>
+            <a href="login.html" class="block px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white font-semibold transition-colors duration-300">登录</a>
+            <a href="register.html" class="block px-4 py-2 text-gray-200 hover:bg-gray-700 transition-colors duration-300">注册</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 py-12 min-h-screen">
+        <header class="text-center mb-12 animate-fade-in-down">
+            <h1 class="text-4xl font-bold text-blue-400">认识我们的团队</h1>
+            <p class="text-xl text-gray-300 mt-2">驱动 C.A.R.S 创新背后的人才</p>
+        </header>
+
+        <section class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Team Member 1 Placeholder -->
+            <div class="bg-gray-800 p-6 rounded-lg shadow-xl text-center animate-slide-in-left">
+                <img src="https://via.placeholder.com/150/007BFF/FFFFFF?Text=Team+Member" alt="Team Member" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-blue-500">
+                <h3 class="text-2xl font-semibold text-white mb-1">开发者 A</h3>
+                <p class="text-blue-400 mb-2">首席AR工程师</p>
+                <p class="text-gray-400 text-sm">负责AR核心模块的开发与实现，拥有多年计算机视觉经验。</p>
+            </div>
+
+            <!-- Team Member 2 Placeholder -->
+            <div class="bg-gray-800 p-6 rounded-lg shadow-xl text-center animate-slide-in-left" style="animation-delay: 0.2s;">
+                <img src="https://via.placeholder.com/150/28A745/FFFFFF?Text=Team+Member" alt="Team Member" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-green-500">
+                <h3 class="text-2xl font-semibold text-white mb-1">开发者 B</h3>
+                <p class="text-green-400 mb-2">后端架构师</p>
+                <p class="text-gray-400 text-sm">设计并维护C.A.R.S强大的后端服务，确保系统稳定高效运行。</p>
+            </div>
+
+            <!-- Team Member 3 Placeholder -->
+            <div class="bg-gray-800 p-6 rounded-lg shadow-xl text-center animate-slide-in-left" style="animation-delay: 0.4s;">
+                <img src="https://via.placeholder.com/150/FFC107/000000?Text=Team+Member" alt="Team Member" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-yellow-500">
+                <h3 class="text-2xl font-semibold text-white mb-1">设计师 C</h3>
+                <p class="text-yellow-400 mb-2">UX/UI 设计师</p>
+                <p class="text-gray-400 text-sm">致力于打造美观易用的用户界面，提升用户与AR技术的交互体验。</p>
+            </div>
+            <div class="bg-gray-800 p-6 rounded-lg shadow-xl text-center animate-slide-in-left" style="animation-delay: 0.4s;">
+                <img src="https://via.placeholder.com/150/FFC107/000000?Text=Team+Member" alt="Team Member" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-yellow-500">
+                <h3 class="text-2xl font-semibold text-white mb-1">设计师 D</h3>
+                <p class="text-yellow-400 mb-2">UX/UI 设计师</p>
+                <p class="text-gray-400 text-sm">致力于打造美观易用的用户界面，提升用户与AR技术的交互体验。</p>
+            </div>
+             <!-- Add more team members as needed -->
+        </section>
+    </main>
+
+    <!-- Footer (Copied from index.html for consistency) -->
+    <footer class="bg-gray-900 border-t border-gray-700 py-8 text-center">
+        <div class="container mx-auto px-6">
+            <p class="text-gray-400">&copy; <span id="current-year"></span> C.A.R.S - Car Location Acquisition Augmented Reality System. 版权所有.</p>
+            <p class="text-gray-500 text-sm mt-2">联系我们: <a href="mailto:contact@cars-ar.com" class="hover:text-blue-400">contact@cars-ar.com</a></p>
+        </div>
+    </footer>
+
+</body>
+</html>

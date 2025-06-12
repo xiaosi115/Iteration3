@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用户中心 - C.A.R.S</title>
+    <script src="https://cdn.tailwindcss.com/"></script>
+    <script defer src="./script/script.js"></script>
+    <script defer src="./script/api-client.js"></script>
+    <style>
+        body {
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-100 font-sans antialiased">
+
+    <!-- Navigation Bar -->
+    <nav class="bg-gray-800 shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold text-white hover:text-blue-400 transition-colors duration-300">
+                C.A.R.S
+            </a>
+            <div class="hidden md:flex space-x-4">
+                <a href="index.html" class="px-3 py-2 text-gray-200 hover:bg-gray-700 rounded-md transition-colors duration-300">主页</a>
+                <a href="team.html" class="px-3 py-2 text-gray-200 hover:bg-gray-700 rounded-md transition-colors duration-300">团队介绍</a>
+                <a href="index.html#download" class="px-3 py-2 text-gray-200 hover:bg-gray-700 rounded-md transition-colors duration-300">下载页面</a>
+                <a href="#" id="logout-btn" class="px-3 py-2 bg-red-600 hover:bg-red-500 text-white font-semibold rounded-md transition-colors duration-300">退出登录</a>
+            </div>
+            <div class="md:hidden">
+                <button id="menu-toggle" class="text-gray-200 focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
+        </div>
+        <div id="mobile-menu" class="md:hidden hidden bg-gray-800">
+            <a href="index.html" class="block px-4 py-2 text-gray-200 hover:bg-gray-700 transition-colors duration-300">主页</a>
+            <a href="team.html" class="block px-4 py-2 text-gray-200 hover:bg-gray-700 transition-colors duration-300">团队介绍</a>
+            <a href="index.html#download" class="block px-4 py-2 text-gray-200 hover:bg-gray-700 transition-colors duration-300">下载页面</a>
+            <a href="#" id="mobile-logout-btn" class="block px-4 py-2 bg-red-600 hover:bg-red-500 text-white font-semibold transition-colors duration-300">退出登录</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- User Profile Section -->
+            <div class="md:col-span-1">
+                <div class="bg-gray-800 rounded-lg shadow-lg p-6">
+                    <div class="text-center mb-6">
+                        <div class="w-24 h-24 rounded-full bg-blue-600 mx-auto flex items-center justify-center">
+                            <span id="user-initials" class="text-3xl font-bold text-white">用户</span>
+                        </div>
+                        <h2 id="user-fullname" class="text-xl font-bold mt-4">加载中...</h2>
+                        <p id="user-username" class="text-gray-400">@username</p>
+                    </div>
+                    
+                    <div class="space-y-3 text-sm">
+                        <div class="flex items-center">
+                            <svg class="w-5 h-5 text-gray-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                            <span id="user-email">加载中...</span>
+                        </div>
+                        <div class="flex items-center">
+                            <svg class="w-5 h-5 text-gray-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+                            <span id="user-phone">加载中...</span>
+                        </div>
+                        <div class="flex items-center">
+                            <svg class="w-5 h-5 text-gray-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                            <span id="user-created">加载中...</span>
+                        </div>
+                    </div>
+                    
+                    <button id="edit-profile-btn" class="w-full mt-6 bg-blue-600 hover:bg-blue-500 text-white py-2 px-4 rounded-md transition-colors duration-300">
+                        编辑个人资料
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Vehicle Management Section -->
+            <div class="md:col-span-2">
+                <div class="bg-gray-800 rounded-lg shadow-lg p-6 mb-8">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-2xl font-bold">我的车辆</h2>
+                        <button id="add-vehicle-btn" class="bg-green-600 hover:bg-green-500 text-white py-2 px-4 rounded-md transition-colors duration-300 flex items-center">
+                            <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
+                            添加车辆
+                        </button>
+                    </div>
+                    
+                    <div id="vehicles-container" class="space-y-4">
+                        <div class="text-center py-8 text-gray-400">
+                            <p id="loading-vehicles">加载中...</p>
+                            <p id="no-vehicles" class="hidden">您还没有添加任何车辆</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Feedback Section -->
+                <div class="bg-gray-800 rounded-lg shadow-lg p-6">
+                    <h2 class="text-2xl font-bold mb-6">提交反馈</h2>
+                    <form id="feedback-form" class="space-y-4">
+                        <div>
+                            <label for="feedback-message" class="block text-sm font-medium text-gray-300 mb-1">您的反馈</label>
+                            <textarea id="feedback-message" rows="4" class="w-full px-4 py-2.5 bg-gray-700 border border-gray-600 rounded-lg text-gray-100 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-500" placeholder="请告诉我们您的想法或建议..."></textarea>
+                        </div>
+                        <button type="submit" class="bg-blue-600 hover:bg-blue-500 text-white py-2 px-4 rounded-md transition-colors duration-300">
+                            提交反馈
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Modals -->
+    <!-- Add/Edit Vehicle Modal -->
+    <div id="vehicle-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center hidden">
+        <div class="bg-gray-800 rounded-lg shadow-xl p-6 w-full max-w-md mx-4 animate-fade-in">
+            <h3 id="vehicle-modal-title" class="text-xl font-bold mb-4">添加新车辆</h3>
+            <form id="vehicle-form" class="space-y-4">
+                <input type="hidden" id="vehicle-id">
+                <div>
+                    <label for="license-plate" class="block text-sm font-medium text-gray-300 mb-1">车牌号码</label>
+                    <input type="text" id="license-plate" class="w-full px-4 py-2.5 bg-gray-700 border border-gray-600 rounded-lg text-gray-100 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-500" placeholder="例如: 京A12345" required>
+                </div>
+                <div>
+                    <label for="vehicle-model" class="block text-sm font-medium text-gray-300 mb-1">车型</label>
+                    <input type="text" id="vehicle-model" class="w-full px-4 py-2.5 bg-gray-700 border border-gray-600 rounded-lg text-gray-100 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-500" placeholder="例如: 丰田卡罗拉" required>
+                </div>
+                <div>
+                    <label for="vehicle-color" class="block text-sm font-medium text-gray-300 mb-1">颜色</label>
+                    <input type="text" id="vehicle-color" class="w-full px-4 py-2.5 bg-gray-700 border border-gray-600 rounded-lg text-gray-100 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-500" placeholder="例如: 白色" required>
+                </div>
+                <div class="flex justify-end space-x-3 pt-4">
+                    <button type="button" id="cancel-vehicle-btn" class="px-4 py-2 bg-gray-600 hover:bg-gray-500 text-white rounded-md transition-colors duration-300">取消</button>
+                    <button type="submit" id="save-vehicle-btn" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-md transition-colors duration-300">保存</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Edit Profile Modal -->
+    <div id="profile-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center hidden">
+        <div class="bg-gray-800 rounded-lg shadow-xl p-6 w-full max-w-md mx-4 animate-fade-in">
+            <h3 class="text-xl font-bold mb-4">编辑个人资料</h3>
+            <form id="profile-form" class="space-y-4">
+                <div>
+                    <label for="edit-fullname" class="block text-sm font-medium text-gray-300 mb-1">姓名</label>
+                    <input type="text" id="edit-fullname" class="w-full px-4 py-2.5 bg-gray-700 border border-gray-600 rounded-lg text-gray-100 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-500" required>
+                </div>
+                <div>
+                    <label for="edit-email" class="block text-sm font-medium text-gray-300 mb-1">邮箱</label>
+                    <input type="email" id="edit-email" class="w-full px-4 py-2.5 bg-gray-700 border border-gray-600 rounded-lg text-gray-100 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-500" required>
+                </div>
+                <div>
+                    <label for="edit-phone" class="block text-sm font-medium text-gray-300 mb-1">手机号码</label>
+                    <input type="tel" id="edit-phone" class="w-full px-4 py-2.5 bg-gray-700 border border-gray-600 rounded-lg text-gray-100 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-500" required>
+                </div>
+                <div>
+                    <label for="edit-password" class="block text-sm font-medium text-gray-300 mb-1">新密码 (留空则不修改)</label>
+                    <input type="password" id="edit-password" class="w-full px-4 py-2.5 bg-gray-700 border border-gray-600 rounded-lg text-gray-100 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-500">
+                </div>
+                <div class="flex justify-end space-x-3 pt-4">
+                    <button type="button" id="cancel-profile-btn" class="px-4 py-2 bg-gray-600 hover:bg-gray-500 text-white rounded-md transition-colors duration-300">取消</button>
+                    <button type="submit" id="save-profile-btn" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-md transition-colors duration-300">保存</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 border-t border-gray-700 py-8 text-center mt-12">
+        <div class="container mx-auto px-6">
+            <p class="text-gray-400">&copy; <span id="current-year"></span> C.A.R.S - 版权所有.</p>
+        </div>
+    </footer>
+
+    <script>
+    
+        // Check authentication
+        document.addEventListener('DOMContentLoaded', function() {
+            if (!requireAuth()) {
+                return; // Not authenticated, redirected to login
+            }
+            
+            // Load user data
+            loadUserData();
+            
+            // Load user vehicles
+            loadUserVehicles();
+            
+            // Logout handlers
+            document.getElementById('logout-btn').addEventListener('click', handleLogout);
+            document.getElementById('mobile-logout-btn').addEventListener('click', handleLogout);
+            
+            // Add vehicle button
+            document.getElementById('add-vehicle-btn').addEventListener('click', showAddVehicleModal);
+            document.getElementById('cancel-vehicle-btn').addEventListener('click', hideVehicleModal);
+            document.getElementById('vehicle-form').addEventListener('submit', handleVehicleSubmit);
+            
+            // Edit profile button
+            document.getElementById('edit-profile-btn').addEventListener('click', showEditProfileModal);
+            document.getElementById('cancel-profile-btn').addEventListener('click', hideProfileModal);
+            document.getElementById('profile-form').addEventListener('submit', handleProfileSubmit);
+            
+            // Feedback form
+            document.getElementById('feedback-form').addEventListener('submit', handleFeedbackSubmit);
+        });
+        
+        // Load user data
+        async function loadUserData() {
+            try {
+                const user = UserAPI.getCurrentUser();
+                if (!user) {
+                    throw new Error('用户数据不存在');
+                }
+                
+                // Get full user profile
+                const userProfile = await UserAPI.getUserProfile(user.user_id);
+                
+                // Update UI with user data
+                document.getElementById('user-fullname').textContent = userProfile.full_name;
+                document.getElementById('user-username').textContent = '@' + userProfile.username;
+                document.getElementById('user-email').textContent = userProfile.email;
+                document.getElementById('user-phone').textContent = userProfile.phone_number;
+                
+                // Format created date
+                const createdDate = new Date(userProfile.created_at);
+                document.getElementById('user-created').textContent = '注册于 ' + createdDate.toLocaleDateString();
+                
+                // Set user initials
+                const initials = userProfile.full_name.split(' ')
+                    .map(name => name.charAt(0))
+                    .join('')
+                    .toUpperCase();
+                document.getElementById('user-initials').textContent = initials;
+                
+                // Pre-fill edit profile form
+                document.getElementById('edit-fullname').value = userProfile.full_name;
+                document.getElementById('edit-email').value = userProfile.email;
+                document.getElementById('edit-phone').value = userProfile.phone_number;
+            } catch (error) {
+                console.error('加载用户数据失败:', error);
+                alert('加载用户数据失败，请重新登录');
+                UserAPI.logout();
+            }
+        }
+        
+        // Load user vehicles
+        async function loadUserVehicles() {
+            try {
+                const user = UserAPI.getCurrentUser();
+                if (!user) {
+                    throw new Error('用户数据不存在');
+                }
+                
+                const vehicles = await VehicleAPI.getUserVehicles(user.user_id);
+                
+                // Hide loading message
+                document.getElementById('loading-vehicles').classList.add('hidden');
+                
+                // Show no vehicles message if no vehicles
+                if (vehicles.length === 0) {
+                    document.getElementById('no-vehicles').classList.remove('hidden');
+                    return;
+                }
+                
+                // Clear vehicles container
+                const container = document.getElementById('vehicles-container');
+                container.innerHTML = '';
+                
+                // Add vehicles to container
+                vehicles.forEach(vehicle => {
+                    const vehicleCard = createVehicleCard(vehicle);
+                    container.appendChild(vehicleCard);
+                });
+            } catch (error) {
+                console.error('加载车辆数据失败:', error);
+                document.getElementById('loading-vehicles').textContent = '加载车辆数据失败，请刷新页面重试';
+            }
+        }
+        
+        // Create vehicle card element
+        function createVehicleCard(vehicle) {
+            const card = document.createElement('div');
+            card.className = 'bg-gray-700 rounded-lg p-4 flex flex-col md:flex-row justify-between items-start md:items-center';
+            card.dataset.vehicleId = vehicle.vehicle_id;
+            card.dataset.licensePlate = vehicle.license_plate;
+            
+            const infoDiv = document.createElement('div');
+            infoDiv.className = 'mb-4 md:mb-0';
+            
+            const licensePlate = document.createElement('h3');
+            licensePlate.className = 'text-xl font-bold';
+            licensePlate.textContent = vehicle.license_plate;
+            
+            const details = document.createElement('p');
+            details.className = 'text-gray-400';
+            details.textContent = `${vehicle.model} · ${vehicle.color}`;
+            
+            infoDiv.appendChild(licensePlate);
+            infoDiv.appendChild(details);
+            
+            const actionsDiv = document.createElement('div');
+            actionsDiv.className = 'flex space-x-2';
+            
+            const editBtn = document.createElement('button');
+            editBtn.className = 'bg-blue-600 hover:bg-blue-500 text-white py-1 px-3 rounded-md transition-colors duration-300 text-sm';
+            editBtn.textContent = '编辑';
+            editBtn.addEventListener('click', () => editVehicle(vehicle));
+            
+            const deleteBtn = document.createElement('button');
+            deleteBtn.className = 'bg-red-600 hover:bg-red-500 text-white py-1 px-3 rounded-md transition-colors duration-300 text-sm';
+            deleteBtn.textContent = '删除';
+            deleteBtn.addEventListener('click', () => deleteVehicle(vehicle.license_plate));
+            
+            actionsDiv.appendChild(editBtn);
+            actionsDiv.appendChild(deleteBtn);
+            
+            card.appendChild(infoDiv);
+            card.appendChild(actionsDiv);
+            
+            return card;
+        }
+        
+        // Handle logout
+        function handleLogout(e) {
+            e.preventDefault();
+            if (confirm('确定要退出登录吗？')) {
+                UserAPI.logout();
+            }
+        }
+        
+        // Show add vehicle modal
+        function showAddVehicleModal() {
+            // Reset form
+            document.getElementById('vehicle-form').reset();
+            document.getElementById('vehicle-id').value = '';
+            document.getElementById('vehicle-modal-title').textContent = '添加新车辆';
+            
+            // Show modal
+            document.getElementById('vehicle-modal').classList.remove('hidden');
+        }
+        
+        // Hide vehicle modal
+        function hideVehicleModal() {
+            document.getElementById('vehicle-modal').classList.add('hidden');
+        }
+        
+        // Edit vehicle
+        function editVehicle(vehicle) {
+            // Fill form with vehicle data
+            document.getElementById('vehicle-id').value = vehicle.vehicle_id;
+            document.getElementById('license-plate').value = vehicle.license_plate;
+            document.getElementById('vehicle-model').value = vehicle.model;
+            document.getElementById('vehicle-color').value = vehicle.color;
+            
+            // Update modal title
+            document.getElementById('vehicle-modal-title').textContent = '编辑车辆';
+            
+            // Show modal
+            document.getElementById('vehicle-modal').classList.remove('hidden');
+        }
+        
+        // Delete vehicle
+        async function deleteVehicle(licensePlate) {
+            if (confirm(`确定要删除车牌号为 ${licensePlate} 的车辆吗？`)) {
+                try {
+                    await VehicleAPI.deleteVehicle(licensePlate);
+                    alert('车辆删除成功');
+                    loadUserVehicles(); // Reload vehicles
+                } catch (error) {
+                    console.error('删除车辆失败:', error);
+                    alert('删除车辆失败: ' + (error.message || '未知错误'));
+                }
+            }
+        }
+        
+        // Handle vehicle form submit
+        async function handleVehicleSubmit(e) {
+            e.preventDefault();
+            
+            const vehicleId = document.getElementById('vehicle-id').value;
+            const licensePlate = document.getElementById('license-plate').value;
+            const model = document.getElementById('vehicle-model').value;
+            const color = document.getElementById('vehicle-color').value;
+            
+            try {
+                const user = UserAPI.getCurrentUser();
+                
+                if (vehicleId) {
+                    // Update existing vehicle
+                    await VehicleAPI.updateVehicle(licensePlate, { model, color });
+                    alert('车辆更新成功');
+                } else {
+                    // Add new vehicle
+                    const vehicleData = {
+                        user_id: user.user_id,
+                        license_plate: licensePlate,
+                        model,
+                        color
+                    };
+                    await VehicleAPI.addVehicle(vehicleData);
+                    alert('车辆添加成功');
+                }
+                
+                hideVehicleModal();
+                loadUserVehicles(); // Reload vehicles
+            } catch (error) {
+                console.error('保存车辆失败:', error);
+                alert('保存车辆失败: ' + (error.message || '未知错误'));
+            }
+        }
+        
+        // Show edit profile modal
+        function showEditProfileModal() {
+            document.getElementById('profile-modal').classList.remove('hidden');
+        }
+        
+        // Hide profile modal
+        function hideProfileModal() {
+            document.getElementById('profile-modal').classList.add('hidden');
+        }
+        
+        // Handle profile form submit
+        async function handleProfileSubmit(e) {
+            e.preventDefault();
+            
+            const fullName = document.getElementById('edit-fullname').value;
+            const email = document.getElementById('edit-email').value;
+            const phoneNumber = document.getElementById('edit-phone').value;
+            const password = document.getElementById('edit-password').value;
+            
+            try {
+                const user = UserAPI.getCurrentUser();
+                
+                // Prepare update data
+                const userData = {
+                    full_name: fullName,
+                    email,
+                    phone_number: phoneNumber,
+                    password: password || user.password // Use existing password if not changed
+                };
+                
+                // Update user profile
+                await UserAPI.updateUserProfile(user.username, userData);
+                
+                // Update local storage with new data
+                const updatedUser = { ...user, ...userData };
+                localStorage.setItem('currentUser', JSON.stringify(updatedUser));
+                
+                alert('个人资料更新成功');
+                hideProfileModal();
+                loadUserData(); // Reload user data
+            } catch (error) {
+                console.error('更新个人资料失败:', error);
+                alert('更新个人资料失败: ' + (error.message || '未知错误'));
+            }
+        }
+        
+        // Handle feedback form submit
+        async function handleFeedbackSubmit(e) {
+            e.preventDefault();
+            
+            const message = document.getElementById('feedback-message').value;
+            if (!message.trim()) {
+                alert('请输入反馈内容');
+                return;
+            }
+            
+            try {
+                const user = UserAPI.getCurrentUser();
+                
+                const feedbackData = {
+                    user_id: user.user_id,
+                    email: user.email,
+                    message
+                };
+                
+                await FeedbackAPI.submitFeedback(feedbackData);
+                
+                alert('感谢您的反馈！');
+                document.getElementById('feedback-message').value = '';
+            } catch (error) {
+                console.error('提交反馈失败:', error);
+                alert('提交反馈失败: ' + (error.message || '未知错误'));
+            }
+        }
+    </script>
+</body>
+</html>
